@@ -1,0 +1,5 @@
+package se.callista.microservices.api.oauth2.util;
+
+public class OAuth2AuthoritiesExtractor {
+
+}

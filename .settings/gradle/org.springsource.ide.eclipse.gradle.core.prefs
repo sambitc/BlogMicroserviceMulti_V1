@@ -1,0 +1,7 @@
+#org.springsource.ide.eclipse.gradle.core.preferences.GradleProjectPreferences
+#Fri Jul 08 19:23:43 IST 2016
+build.family.org.gradle.tooling.model.eclipse.HierarchicalEclipseProject=;auth-server;discovery-server;edge-server;monitor-dashboard;product-api-service;product-composite-service;product-service;recommendation-service;review-service;turbine;
+org.springsource.ide.eclipse.gradle.classname.enableSorting=false
+org.springsource.ide.eclipse.gradle.classpath.enableSorting=true
+org.springsource.ide.eclipse.gradle.linkedresources=
+org.springsource.ide.eclipse.gradle.rootprojectloc=

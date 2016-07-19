@@ -1,0 +1,15 @@
+package snippet;
+
+public class Snippet {
+	public static void main(String[] args) {
+		eureka:
+		  client:
+		    registry-fetch-interval-seconds: 5
+		    service-url:
+		      defaultZone: http://localhost:8761/eureka/
+		  instance:
+		    prefer-ip-address: true
+		    lease-renewal-interval-in-seconds: 10
+	}
+}
+

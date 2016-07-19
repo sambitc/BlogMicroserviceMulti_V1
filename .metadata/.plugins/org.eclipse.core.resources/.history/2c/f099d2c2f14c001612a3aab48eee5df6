@@ -1,0 +1,38 @@
+server:
+  port: 0
+
+spring:
+  rabbitmq:
+    username: sambitc
+    password: mindfire
+    
+security:
+  oauth2:
+    client:
+      client-id: productapi
+      client-secret: acmesecret
+      access-token-uri: http://localhost:9999/uaa/oauth/token
+      grant-type: client_credentials
+      scope: webshop
+      authorities: ROLE_CLIENT
+    resource:
+      user-info-uri: http://localhost:9999/uaa/user
+      
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    
+#    metadata-map:
+#      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${random.value}}}
+
+      
+
+logging:
+  level:
+    se.callista: INFO
+    
+    

@@ -1,0 +1,5 @@
+
+include "discovery-server", "edge-server", "monitor-dashboard", "auth-server", "turbine"
+include	"product-service", "recommendation-service", "review-service"
+include	"product-api-service"
+include	"product-composite-service"

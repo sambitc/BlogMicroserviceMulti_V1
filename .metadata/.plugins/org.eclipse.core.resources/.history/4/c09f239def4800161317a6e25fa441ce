@@ -1,0 +1,40 @@
+server:
+  port: 0
+
+spring:
+  oauth2:
+    resource:
+      accessTokenUri: http://localhost:9999/uaa/oauth/token
+  rabbitmq:
+    username: sambitc
+    password: mindfire
+    
+security:
+  oauth2:
+    client:
+      clientId: productapi
+      clientSecret: acmesecret
+      accessTokenUri: http://localhost:9999/uaa/oauth/token
+      grant-type: client_credentials
+      scope: webshop
+  resource:
+      user-info-uri: http://localhost:9999/uaa/user
+
+management:
+  security:
+    enabled: false
+
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    metadataMap:
+      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${random.value}}}
+
+  client:
+    registryFetchIntervalSeconds: 5
+
+logging:
+  level:
+    se.callista: INFO
+    
+    
