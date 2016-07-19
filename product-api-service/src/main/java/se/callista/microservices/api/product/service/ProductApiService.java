@@ -46,7 +46,7 @@ public class ProductApiService {
     private LoadBalancerClient loadBalancer;
 
     @PreAuthorize("#oauth2.clientHasRole('ROLE_CLIENT') AND hasAuthority('ROLE_GUEST') ")
-    @RequestMapping("/{productId}")
+    @RequestMapping("/{productId}") 
     @HystrixCommand(fallbackMethod = "defaultProductComposite")
     public ResponseEntity<String> getProductComposite(
         @PathVariable int productId, @RequestHeader(value="Authorization") String authorizationHeader,
