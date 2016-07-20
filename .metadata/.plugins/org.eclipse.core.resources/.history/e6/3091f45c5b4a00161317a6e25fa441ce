@@ -1,5 +1,0 @@
-server.port=9999
-server.contextPath=/uaa
-security.user.password=password1
-security.user.role=GUEST
-logging.level.org.springframework.security=DEBUG

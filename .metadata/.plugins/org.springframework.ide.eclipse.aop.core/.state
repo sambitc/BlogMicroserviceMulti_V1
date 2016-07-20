@@ -6,8 +6,8 @@
 <aop-project name="product-api-service"/>
 <aop-project name="auth-server"/>
 <aop-project name="edge-server"/>
-<aop-project name="recommendation-service"/>
 <aop-project name="product-service"/>
+<aop-project name="recommendation-service"/>
 <aop-project name="discovery-server"/>
 <aop-project name="monitor-dashboard"/>
 </aop-reference-model>

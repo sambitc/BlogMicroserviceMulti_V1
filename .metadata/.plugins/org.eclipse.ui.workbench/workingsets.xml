@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workingSetManager>
-<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1467987000181_0" label="BlogMicroserviceMulti" name="BlogMicroserviceMulti">
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1467987000181_0" label="BlogMicroserviceMulti" name="BlogMicroserviceMulti"/>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1468932461225_1" label="BlogMicroserviceMulti_V1" name="BlogMicroserviceMulti_V1">
 <item elementID="=review-service" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
 <item elementID="=recommendation-service" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
 <item elementID="=monitor-dashboard" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
@@ -12,4 +13,5 @@
 <item elementID="=edge-server" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
 <item elementID="=discovery-server" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
 </workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1468936582572_2" label="Window Working Set" name="Aggregate for window 1468936582572"/>
 </workingSetManager>

@@ -1,5 +1,0 @@
-package se.callista.microservices.api.product.security;
-
-public class MethodSecurityConfig {
-
-}

@@ -20,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.esotericsoftware.minlog.Log;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+
+import se.callista.microservices.api.product.client.ProductCompositeClient;
 
 /**
  * Created by magnus on 04/03/15.ssdfg
@@ -28,51 +31,53 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 @RestController
 public class ProductApiService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ProductApiService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ProductApiService.class);
 
-    private RestTemplate restTemplate = new RestTemplate();
+	private RestTemplate restTemplate = new RestTemplate();
 
-    @Autowired
-    private LoadBalancerClient loadBalancer;
+	@Autowired
+	private LoadBalancerClient loadBalancer;
 
-    @PreAuthorize("#oauth2.clientHasRole('ROLE_CLIENT') AND hasAuthority('ROLE_GUEST') ")
-    @RequestMapping("/{productId}") 
-    @HystrixCommand(fallbackMethod = "defaultProductComposite")
-    public ResponseEntity<String> getProductComposite(
-        @PathVariable int productId, @RequestHeader(value="Authorization") String authorizationHeader,
-        Principal currentUser) {
+	@PreAuthorize("#oauth2.clientHasRole('ROLE_CLIENT') AND hasAuthority('ROLE_GUEST') ")
+	@RequestMapping("/{productId}")
+	 @HystrixCommand(fallbackMethod = "defaultProductComposite")
+	public ResponseEntity<String> getProductComposite(@PathVariable int productId,
+			@RequestHeader(value = "Authorization") String authorizationHeader, Principal currentUser) {
 
-        LOG.info("ProductApi: User={}, Auth={}, called with productId={}", currentUser.getName(), authorizationHeader, productId);
-        URI uri = loadBalancer.choose("productcomposite").getUri();
-        String url = uri.toString() + "/product/" + productId;
-        LOG.debug("GetProductComposite from URL: {}", url);
-        
-        // Headers
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(org.springframework.http.MediaType.APPLICATION_JSON));
-        headers.set("Authorization", authorizationHeader);
-        HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+		LOG.info("ProductApi: User={}, Auth={}, called with productId={}", currentUser.getName(), authorizationHeader,
+				productId);
+		URI uri = loadBalancer.choose("productcomposite").getUri();
+		String url = uri.toString() + "/product/" + productId;
+		LOG.debug("GetProductComposite from URL: {}", url);
 
-        //ResponseEntity<String> result = restTemplate.getForEntity(url, String.class);
-        ResponseEntity<String> result = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-        LOG.info("GetProductComposite http-status: {}", result.getStatusCode());
-        LOG.debug("GetProductComposite body: {}", result.getBody());
+		// Add authorization header Headers
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Authorization", authorizationHeader);
+		HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
 
-        return result;
-    }
+		// ResponseEntity<String> result = restTemplate.getForEntity(url,
+		// String.class);
+		ResponseEntity<String> result = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
 
-    /**
-     * Fallback method for getProductComposite()
-     *
-     * @param productId
-     * @return
-     */
-    public ResponseEntity<String> defaultProductComposite(
-        @PathVariable int productId,
-        @RequestHeader(value="Authorization") String authorizationHeader,
-        Principal currentUser) {
+		LOG.info("GetProductComposite http-status: {}", result.getStatusCode());
+		LOG.debug("GetProductComposite body: {}", result.getBody());
 
-        LOG.warn("Using fallback method for product-composite-service. User={}, Auth={}, called with productId={}", currentUser.getName(), authorizationHeader, productId);
-        return new ResponseEntity<String>("", HttpStatus.BAD_GATEWAY);
-    }
+		return result;
+	}
+
+	/**
+	 * Fallback method for getProductComposite()
+	 *
+	 * @param productId
+	 * @return
+	 */
+	public ResponseEntity<String> defaultProductComposite(@PathVariable int productId,
+			@RequestHeader(value = "Authorization") String authorizationHeader,
+			Principal currentUser, Throwable t) {
+
+		LOG.warn("Using fallback method for product-composite-service. User={}, Auth={}, called with productId={}",
+				currentUser.getName(), authorizationHeader, productId);
+		Log.warn("==="+t.getMessage());
+		return new ResponseEntity<String>(t.getMessage(), HttpStatus.BAD_GATEWAY);
+	}
 }

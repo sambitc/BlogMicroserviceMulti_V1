@@ -15,16 +15,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 
 import se.callista.microservices.api.product.security.CustomUserInfoTokenServices;
 import feign.RequestInterceptor;
+import feign.RequestTemplate;
 
 @SpringBootApplication
 @EnableCircuitBreaker
@@ -73,4 +76,23 @@ public class ProductApiServiceApplication extends ResourceServerConfigurerAdapte
 	public void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/", "/demo").permitAll().anyRequest().authenticated();
 	}
+	
+/*
+ * Below @Bean used for feign client interceptor for adding authorization header,
+ * but now it's not working with HYSTRIX. So use restTemplete instead
+ * 
+ */
+//	@Bean
+//	public RequestInterceptor requestTokenBearerInterceptor() {
+//	    return new RequestInterceptor() {
+//	        @Override
+//	        public void apply(RequestTemplate requestTemplate) {
+//	            OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails)
+//	                    SecurityContextHolder.getContext().getAuthentication().getDetails();
+//	            System.out.println("----------------------autho header----"+details.getTokenValue());
+//
+//	            requestTemplate.header("Authorization", "bearer " + details.getTokenValue());
+//	        }
+//	    };
+//	}
 }

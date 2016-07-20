@@ -1,0 +1,21 @@
+package se.callista.microservices.api.product.security;
+
+import java.util.Collections;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.client.RestTemplate;
+
+@Configuration
+public class CustomClientHttpRequestInterceptorConfig {
+
+	@Bean
+	public RestTemplate restTemplate(@RequestHeader(value = "Authorization") String authorizationHeader) {
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.setInterceptors(
+				Collections.singletonList(new CustomClientHttpRequestInterceptor(authorizationHeader)));
+		return restTemplate;
+	}
+
+}
